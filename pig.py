@@ -51,7 +51,7 @@ def start_turn(player):
                     player.scoreboard = player.scoreboard + current_points
                     pass_die = True
             else:
-                while answer != 'y' and != 'n':
+                while answer != 'y' and answer != 'n':
                     answer = input('Do you wish to roll again? (y/n)')
                     if answer == 'y':
                         player.turn_roll = die_roll()
