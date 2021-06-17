@@ -1,4 +1,10 @@
 """ File for the Player class """
+
+__author__ = 'Preston Fawcett'
+__email__ = 'ptfawcett@csu.fullerton.edu'
+__maintainer__ = 'PrestonFawcett'
+
+
 class Player:
     """ Holds name, total score, current roll,
     and booleans for if computer and if winner """

@@ -1,5 +1,9 @@
 """ File for all functions used in pig.py """
 
+__author__ = 'Preston Fawcett'
+__email__ = 'ptfawcett@csu.fullerton.edu'
+__maintainer__ = 'PrestonFawcett'
+
 import random
 import time
 
