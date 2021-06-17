@@ -5,162 +5,15 @@ __author__ = 'Preston Fawcett'
 __email__ = 'ptfawcett@csu.fullerton.edu'
 __maintainer__ = 'PrestonFawcett'
 
-import random
 import time
-
-def die_roll():
-    """ Rolls the die """
-    value = random.randint(1, 6)
-    time.sleep(1)
-    print('You rolled a {}\n'.format(value))
-    return value
-
-def error():
-    """ Error message for wrong input """
-    print('Invalid input, try again.')
-
-def ai_roll(value):
-    """ Computer decision for rolling """
-    time.sleep(1)
-    if value < 20:
-        return 'y'
-    return 'n'
-
-def rearrange(players):
-    """ Rearrange players based on die roll """
-    turn_order = []
-    for i in range(0, len(players)):
-        if players[i].computer:
-            print('\n{} press Enter key to roll for turn order.'.format(
-                players[i].name))
-            time.sleep(1)
-        else:
-            input('\n{} press Enter key to roll for turn order.'.format(
-                players[i].name))
-        players[i].turn_roll = die_roll()
-        #time.sleep(1)
-        #print("You rolled a {}.".format(players[i].turn_roll))
-
-        if i < 1:
-            turn_order.append(players[i])
-        else:
-            found = False
-            for j in range(0, i):
-                if players[i].turn_roll >= turn_order[j].turn_roll:
-                    turn_order.insert(j, players[i])
-                    found = True
-                elif j == i - 1:
-                    turn_order.append(players[i])
-                    found = True
-                if found:
-                    break
-    return turn_order
-
-
-
-def start_turn(player):
-    """ Players turn process """
-    if player.computer:
-        print('Press the Enter key to roll.')
-        time.sleep(1)
-    else:
-        input('Press the Enter key to roll.')
-    player.turn_roll = die_roll()
-    current_points = 0
-    num_of_rolls = 0
-    pass_die = False
-
-    while player.turn_roll != 1 and not pass_die and not player.winner:
-        current_points = current_points + player.turn_roll
-        num_of_rolls = num_of_rolls + 1
-
-        if player.scoreboard + current_points >= 100:
-            player.winner = True
-        else:
-            time.sleep(1)
-            print('Current turn total points: {}'.format(current_points))
-            print('Total score if hold:       {}'.format(
-                player.scoreboard + current_points))
-            print('Number of rolls:           {}\n'.format(num_of_rolls))
-
-            time.sleep(1)
-            answer = ''
-            while answer not in ('y', 'n'):
-                if player.computer:
-                    print('Do you wish to roll again? (y/n)')
-                    answer = ai_roll(current_points)
-                else:
-                    answer = input('Do you wish to roll again? (y/n)')
-
-                if answer == 'y':
-                    player.turn_roll = die_roll()
-                elif answer == 'n':
-                    player.scoreboard = player.scoreboard + current_points
-                    pass_die = True
-                else:
-                    error()
-
-    if player.turn_roll == 1:
-        print('You rolled a 1. Next players turn.')
-        time.sleep(1)
-
-class Player:
-    """ Child class of Player class for human. """
-
-    # pylint: disable=too-many-instance-attributes
-
-    def __init__(self, name, computer):
-        self.name = name
-        self.scoreboard = 0
-        self.turn_roll = 0
-        self.computer = computer
-        self.winner = False
-
-    @property
-    def name(self):
-        """ Get name """
-        return self._name
-
-    @name.setter
-    def name(self, value):
-        """ Set name """
-        self._name = value
-
-    @property
-    def scoreboard(self):
-        """ Get scoreboard """
-        return self._scoreboard
-
-    @scoreboard.setter
-    def scoreboard(self, value):
-        """ Set scoreboard """
-        self._scoreboard = value
-
-    @property
-    def turn_roll(self):
-        """ Get turn_roll """
-        return self._turn_roll
-
-    @turn_roll.setter
-    def turn_roll(self, value):
-        """ Set turn_roll """
-        self._turn_roll = value
-
-    @property
-    def winner(self):
-        """ Get winner """
-        return self._winner
-
-    @winner.setter
-    def winner(self, value):
-        """ Set winner """
-        self._winner = value
-
-    def __repr__(self):
-        return f'{self.name}: {self.scoreboard}'
+from player import Player
+from functions import error
+from functions import rearrange
+from functions import start_turn
 
 def main():
     """ Main function for game. """
+    # Asking how many players
     num_of_players = 0
     while num_of_players < 2 or num_of_players > 4:
         num_of_players = int(input('How many players (2-4)?: '))
@@ -170,8 +23,12 @@ def main():
     # Initializing players
     players = []
     if num_of_players == 2:
+        answer = input('Is player 2 a computer? (y/n): ')
         players.append(Player(input('\nEnter your name: '), False))
-        players.append(Player('John Scarne', True))
+        if answer == 'y':
+            players.append(Player('John Scarne', True))
+        else:
+            players.append(Player(input('\nEnter your name: '), False))
     else:
         for i in range(0, num_of_players):
             players.append(Player(
