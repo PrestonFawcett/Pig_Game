@@ -1,4 +1,16 @@
+# Pig Game
 
-Please add a header to this file using the instructions found on Canvas.
+- __author__ = 'Preston Fawcett'
+- __email__ = 'ptfawcett@csu.fullerton.edu'
+- __maintainer__ = 'PrestonFawcett'
 
-In the file README.md, identify who you are and what game you wrote. Write a brief synopsis of the game and summarize the rules. Provide an example of game play. Document any features or details you believe makes your game stand out.
+**Instructions**
+
+- This game is a 2-4 player game. If playing by yourself you can play against a computer.
+- To decide turn order everyone rolls a die, order is in descending order.
+- The first player to reach 100 points wins. 
+- You can only score points on your turn.
+- To begin your turn you must roll.
+- After every roll you have the option to roll again or hold.
+- If you hold all the points you aquired during your turn are added to your overall score.
+- If you roll a 1 you don't earn any points during your turn and the next player starts their turn.
